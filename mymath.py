@@ -29,6 +29,11 @@ def volume_cuboid(l=0,b=0,h=0):
     '''
     return l*b*h
 
+def volume_cuboid(a):
+    '''Returns Volume of Cube, takes only 1 argument, side length.
+    '''
+    return a**3
+
 def surface_area_cuboid(l=0,b=0,h=0):
     '''Returns Total surface area of cuboid, lenght as first argument, breadth as second argument, height as the third argument.
     '''
