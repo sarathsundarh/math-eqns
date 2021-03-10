@@ -11,7 +11,7 @@ volumechoice = ["Sphere","Cone","Cube","Cuboid","Sphere"]
 master = tk.Tk()
 master.title("My Math")
 var = StringVar(master)
-varVol = var
+varVol = StringVar(master)
 
 #ADDING TABS
 tabs = ttk.Notebook(master)
@@ -29,6 +29,10 @@ r_area_Label = Label(area,text="Enter Radius:")
 sl_area_Label = Label(area,text="Enter Slant Height:")
 final_result_area = Label(area,text="")
 
+#LABELS FOR AREA
+a_vol_Label = Label(volume,text="Enter Side Length:")
+final_result_vol = Label(volume,text="")
+
 #ALL THE DIFFERENT ENTRIES FOR AREA
 square_entry = Entry(area)
 circle_entry = Entry(area)
@@ -42,6 +46,10 @@ cone_entry1 = Entry(area)
 cone_entry2 = Entry(area)
 cylinder_entry1 = Entry(area)
 cylinder_entry2 = Entry(area)
+
+#ALL THE DIFFERENT ENTRIES FOR VOLUME
+cube_entry = Entry(volume)
+vcuboid_entry1 = Entry(volume)
 
 def areacalculate():
     if var.get()=="Square":
@@ -71,13 +79,21 @@ def areacalculate():
         h = int(cylinder_entry2.get())
         arearesult(mymath.surface_area_cylinder(r,h))
     
+def volcalculate():
+    if varVol.get()=="Cube":
+        a = int(cube_entry.get())
+        volresult(mymath.volume_cube(a))
 
-subButton = Button(area,text="Submit",command=areacalculate)
-all_pack_forgets_area = [subButton,final_result_area,a_area_Label,r_area_Label,square_entry,circle_entry,rectangle_entry1,rectangle_entry2,
+subButtonArea = Button(area,text="Submit",command=areacalculate)
+subButtonVol = Button(volume,text="Submit",command=volcalculate)
+all_pack_forgets_area = [subButtonArea,final_result_area,a_area_Label,r_area_Label,square_entry,circle_entry,rectangle_entry1,rectangle_entry2,
                     b_area_Label,h_area_Label,l_area_Label,cuboid_entry1,cuboid_entry2,cuboid_entry3,sphere_entry,cone_entry1,
                     cone_entry2,sl_area_Label,cylinder_entry1,cylinder_entry2]
 all_entry_delete_area = [square_entry,circle_entry,rectangle_entry1,rectangle_entry2,cuboid_entry1,cuboid_entry2,cuboid_entry3,
                     sphere_entry,cone_entry1,cone_entry2,cylinder_entry1,cylinder_entry2]
+
+all_entry_delete_vol = [cube_entry,vcuboid_entry1]
+all_pack_forgets_vol = [a_vol_Label,subButtonVol]
 
 #ALL THE BUTTON FUNCTIONS
 def areaRender():
@@ -116,19 +132,25 @@ def areaRender():
         cylinder_entry1.pack()
         h_area_Label.pack()
         cylinder_entry2.pack()
-    subButton.pack()
+    subButtonArea.pack()
 
 def volRender():
-    for i in all_entry_delete:
+    for i in all_entry_delete_vol:
         i.delete(0,"end")
-    for i in all_pack_forgets:
+    for i in all_pack_forgets_vol:
         i.pack_forget()
-    if var.get()=="Sphere":
-
+    if varVol.get()=="Cube":
+        a_vol_Label.pack()
+        cube_entry.pack()
+    subButtonVol.pack()
 
 def arearesult(a):
     final_result_area.config(text="Area="+str(a))
     final_result_area.pack()
+
+def volresult(a):
+    final_result_vol.config(text="Volume="+str(a))
+    final_result_vol.pack()
 
 #SETTING UP THE OPTIONS FOR AREA
 var.set("Circle")
@@ -141,9 +163,11 @@ goButtonArea.pack()
 #SETTING UP THE OPTIONS FOR VOLUME
 varVol.set("Sphere")
 voloptions = OptionMenu(volume,varVol,"Sphere","Cube","Cone","Cuboid","Sphere")
+voloptions.pack()
 
 goButtonVol = Button(volume,text="Go",command=volRender)
 goButtonVol.pack()
+
 #FINAL PACKS 
 tabs.pack(expand=1, fill="both")
 master.mainloop()

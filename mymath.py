@@ -29,7 +29,7 @@ def volume_cuboid(l=0,b=0,h=0):
     '''
     return l*b*h
 
-def volume_cuboid(a):
+def volume_cube(a):
     '''Returns Volume of Cube, takes only 1 argument, side length.
     '''
     return a**3
