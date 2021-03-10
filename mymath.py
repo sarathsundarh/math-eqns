@@ -67,4 +67,4 @@ def surface_area_cone(r,l):
 def surface_area_cylinder(r,h):
     '''Returns surface area of a cylinder, radius as first argument and height as the second argument.
     '''
-    return 2*pi*r(r+h)
+    return 2*pi*r*h
