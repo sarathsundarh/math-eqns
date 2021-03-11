@@ -29,9 +29,13 @@ r_area_Label = Label(area,text="Enter Radius:")
 sl_area_Label = Label(area,text="Enter Slant Height:")
 final_result_area = Label(area,text="")
 
-#LABELS FOR AREA
+#LABELS FOR VOLUME
 a_vol_Label = Label(volume,text="Enter Side Length:")
+r_vol_Label = Label(volume,text="Enter Radius:")
 final_result_vol = Label(volume,text="")
+l_vol_Label = Label(volume,text="Enter Length:")
+b_vol_Label = Label(volume,text="Enter Breadth:")
+h_vol_Label = Label(volume,text="Enter Height:")
 
 #ALL THE DIFFERENT ENTRIES FOR AREA
 square_entry = Entry(area)
@@ -50,6 +54,13 @@ cylinder_entry2 = Entry(area)
 #ALL THE DIFFERENT ENTRIES FOR VOLUME
 cube_entry = Entry(volume)
 vcuboid_entry1 = Entry(volume)
+vcuboid_entry2 = Entry(volume)
+vcuboid_entry3 = Entry(volume)
+vsphere_entry = Entry(volume)
+vcone_entry1 = Entry(volume)
+vcone_entry2 = Entry(volume)
+vcylinder_entry1 = Entry(volume)
+vcylinder_entry2 = Entry(volume)
 
 def areacalculate():
     if var.get()=="Square":
@@ -83,6 +94,22 @@ def volcalculate():
     if varVol.get()=="Cube":
         a = int(cube_entry.get())
         volresult(mymath.volume_cube(a))
+    elif varVol.get()=="Sphere":
+        r = int(vsphere_entry.get())
+        volresult(mymath.volume_sphere(r))
+    elif varVol.get()=="Cuboid":
+        l = int(vcuboid_entry1.get())
+        b = int(vcuboid_entry2.get())
+        h = int(vcuboid_entry3.get())
+        volresult(mymath.volume_cuboid(l,b,h))
+    elif varVol.get()=="Cone":
+        r = int(vcone_entry1.get())
+        h = int(vcone_entry2.get())
+        volresult(mymath.volume_cone(r,h))
+    elif varVol.get()=="Cylinder":
+        r = int(vcylinder_entry1.get())
+        h = int(vcylinder_entry2.get())
+        volresult(mymath.volume_cylinder(r,h))
 
 subButtonArea = Button(area,text="Submit",command=areacalculate)
 subButtonVol = Button(volume,text="Submit",command=volcalculate)
@@ -92,8 +119,9 @@ all_pack_forgets_area = [subButtonArea,final_result_area,a_area_Label,r_area_Lab
 all_entry_delete_area = [square_entry,circle_entry,rectangle_entry1,rectangle_entry2,cuboid_entry1,cuboid_entry2,cuboid_entry3,
                     sphere_entry,cone_entry1,cone_entry2,cylinder_entry1,cylinder_entry2]
 
-all_entry_delete_vol = [cube_entry,vcuboid_entry1]
-all_pack_forgets_vol = [a_vol_Label,subButtonVol]
+all_entry_delete_vol = [cube_entry,vsphere_entry,vcuboid_entry1,vcuboid_entry2,vcuboid_entry3,vcone_entry1,vcone_entry2,vcylinder_entry1,vcylinder_entry2]
+all_pack_forgets_vol = [cube_entry,a_vol_Label,final_result_vol,subButtonVol,r_vol_Label,l_vol_Label,b_vol_Label,h_vol_Label,vcone_entry1,vcone_entry2,vsphere_entry,
+                        vcuboid_entry1,vcuboid_entry2,vcuboid_entry3,vcylinder_entry1,vcylinder_entry2]
 
 #ALL THE BUTTON FUNCTIONS
 def areaRender():
@@ -142,8 +170,28 @@ def volRender():
     if varVol.get()=="Cube":
         a_vol_Label.pack()
         cube_entry.pack()
+    elif varVol.get()=="Sphere":
+        r_vol_Label.pack()
+        vsphere_entry.pack()
+    elif varVol.get()=="Cuboid":
+        l_vol_Label.pack()
+        vcuboid_entry1.pack()
+        b_vol_Label.pack()
+        vcuboid_entry2.pack()
+        h_vol_Label.pack()
+        vcuboid_entry3.pack()
+    elif varVol.get()=="Cone":
+        r_vol_Label.pack()
+        vcone_entry1.pack()
+        h_vol_Label.pack()
+        vcone_entry2.pack()
+    elif varVol.get()=="Cylinder":
+        r_vol_Label.pack()
+        vcylinder_entry1.pack()
+        h_vol_Label.pack()
+        vcylinder_entry2.pack()
     subButtonVol.pack()
-
+    
 def arearesult(a):
     final_result_area.config(text="Area="+str(a))
     final_result_area.pack()
@@ -162,7 +210,7 @@ goButtonArea.pack()
 
 #SETTING UP THE OPTIONS FOR VOLUME
 varVol.set("Sphere")
-voloptions = OptionMenu(volume,varVol,"Sphere","Cube","Cone","Cuboid","Sphere")
+voloptions = OptionMenu(volume,varVol,"Sphere","Cube","Cone","Cuboid","Cylinder")
 voloptions.pack()
 
 goButtonVol = Button(volume,text="Go",command=volRender)
