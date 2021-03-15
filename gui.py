@@ -4,6 +4,10 @@ from tkinter import OptionMenu
 import mymath
 from tkinter import ttk
 from threading import *
+from PIL import Image, ImageTk
+from PIL import ImageDraw, ImageFont
+
+
 
 #MAIN STUFF
 areachoice = ["Circle","Square","Rectangle","Cuboid","Sphere","Cone","Cylinder"]
@@ -12,6 +16,11 @@ master = tk.Tk()
 master.title("My Math")
 var = StringVar(master)
 varVol = StringVar(master)
+canSq = tk.Canvas(master,width=300,height=300)
+canCi = tk.Canvas(master)
+
+sqLabel = tk.Label(master,text="Formula=s x s")
+ciLabel = tk.Label(master,text="Formula=𝝅 x r x r")
 
 #ADDING TABS
 tabs = ttk.Notebook(master)
@@ -62,13 +71,27 @@ vcone_entry2 = Entry(volume)
 vcylinder_entry1 = Entry(volume)
 vcylinder_entry2 = Entry(volume)
 
+def create_circle(x, y, r, canvasName): #center coordinates, radius
+    x0 = x - r
+    y0 = y - r
+    x1 = x + r
+    y1 = y + r
+    canvasName.create_oval(x0, y0, x1, y1)
+
 def areacalculate():
     if var.get()=="Square":
         a = int(square_entry.get())
         arearesult(mymath.area_square(a))
+        canSq.create_rectangle(30, 30, 270, 270,outline="#fb0", fill="#fb0")
+        canSq.pack()
+        sqLabel.pack()
     elif var.get()=="Circle":
         r = int(circle_entry.get())
         arearesult(mymath.area_circle(r))
+        create_circle(150,150,5,canCi)
+        canCi.pack()
+        #canCi.create_oval(150,)
+        ciLabel.pack()
     elif var.get()=="Rectangle":
         b = int(rectangle_entry1.get())
         h = int(rectangle_entry2.get())
@@ -111,11 +134,12 @@ def volcalculate():
         h = int(vcylinder_entry2.get())
         volresult(mymath.volume_cylinder(r,h))
 
+can = tk.Canvas()
 subButtonArea = Button(area,text="Submit",command=areacalculate)
 subButtonVol = Button(volume,text="Submit",command=volcalculate)
 all_pack_forgets_area = [subButtonArea,final_result_area,a_area_Label,r_area_Label,square_entry,circle_entry,rectangle_entry1,rectangle_entry2,
-                    b_area_Label,h_area_Label,l_area_Label,cuboid_entry1,cuboid_entry2,cuboid_entry3,sphere_entry,cone_entry1,
-                    cone_entry2,sl_area_Label,cylinder_entry1,cylinder_entry2]
+                    b_area_Label,h_area_Label,l_area_Label,cuboid_entry1,cuboid_entry2,cuboid_entry3,sphere_entry,cone_entry1,canSq,canCi,
+                    cone_entry2,sl_area_Label,cylinder_entry1,cylinder_entry2,ciLabel,sqLabel]
 all_entry_delete_area = [square_entry,circle_entry,rectangle_entry1,rectangle_entry2,cuboid_entry1,cuboid_entry2,cuboid_entry3,
                     sphere_entry,cone_entry1,cone_entry2,cylinder_entry1,cylinder_entry2]
 
